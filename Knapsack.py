@@ -15,9 +15,23 @@ def evaluarSolucion(solucion, precios, pesos, pesoMax):
 def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
     #Seleccionar padres mediante torneo tamaño k
+    padres = []
+    mejor = [0,0]
 
+    for i in range(0, len(poblacion)-1):
+        for j in range(0, k):
+            randomN = random.randint(0,len(poblacion)-1)
+            padre = poblacion[randomN]   
+            if(padre[1] > mejor[1]):
+                mejor = padre;
+            print("hola")
+        padres.append(mejor);
+        #print("Padre mejor", mejor)
+        
     #Cruzar padres con probabilidad cProb
     #if random.randint(1,100) <= cProb:
+        # vas a cruzar padres[i] con padres[i+1] y luego i+2
+        # para cruzar partes los dos padre[0] por un bit aleatorio y intercambias sus partes 
 
     #Mutar padres con probabilidad mProb
     #if random.randint(1,100) <= mProb:
@@ -26,11 +40,11 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
     return poblacion #Devolver la nueva poblacion (sin evaluar)
 
 def main():
-    pesos = [ 34, 45, 14, 76, 32 ]
-    precios = [ 340, 210, 87, 533, 112 ]
+    pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90 ]
+    precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637 ]
     pesoMax = 100 #Peso máximo que se puede poner en la mochila
     nSoluciones = 25 #Tamaño de la poblacion
-    maxGeneraciones = 1 #Numero de generaciones
+    maxGeneraciones = 10 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
     cProb = 0.7 #Probabilidad de cruce
     mProb = 0.1 #Probabilidad de mutacion
