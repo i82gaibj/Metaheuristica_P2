@@ -32,7 +32,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
         #print("Padre mejor", mejor)
         
     #Cruzar padres con probabilidad cProb
-    #if random.randint(1,100) <= cProb:
+    if random.randint(1,100) <= cProb:
         # vas a cruzar padres[i] con padres[i+1] y luego i+2
         # para cruzar partes los dos padre[0] por un bit aleatorio y intercambias sus partes 
 
