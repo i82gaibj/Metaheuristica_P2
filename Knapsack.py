@@ -8,9 +8,12 @@ def evaluarSolucion(solucion, precios, pesos, pesoMax):
         peso += pesos[i]*solucion[i]
 
     if peso > pesoMax:
+        
         return 0
+   
     else:
         return precio
+    
 
 def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
