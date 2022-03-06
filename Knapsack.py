@@ -32,7 +32,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
                 
         padres.append(mejor[0]);
         print("iteracion: ", i , "Padre mejor", mejor[0])
-
+    generacion = padres
     #Cruzar padres con probabilidad cProb
     if random.randint(1,100) <= (cProb*100):
         print("Longuitud: ", len(padres))
@@ -61,7 +61,8 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
     #Mutar padres con probabilidad mProb
     if random.randint(1,100) <= (mProb*100):
         for i in range(len(generacion)):
-            mutacion = random.randint(0, len(generacion)-1)
+            mutacion = random.randint(0, len(generacion[0])-1)
+            print("Mutacion: ", generacion[i][mutacion] == 0)
             if generacion[i][mutacion] == 0:
                 generacion[i][mutacion] == 1
             else:
@@ -120,7 +121,7 @@ def main():
         #Modelo generacional
         poblacion = []
         for solucion in nSoluciones:
-            poblacion.append([solucion[0],evaluarSolucion(solucion[0],precios,pesos,pesoMax)])
+            poblacion.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
         it+=1
 
 
