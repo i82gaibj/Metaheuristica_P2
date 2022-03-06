@@ -1,4 +1,5 @@
 import random
+import time
 
 def evaluarSolucion(solucion, precios, pesos, pesoMax):
     precio = 0
@@ -31,24 +32,24 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
                 mejor = padre;
                 
         padres.append(mejor[0]);
-        print("iteracion: ", i , "Padre mejor", mejor[0])
+        #print("iteracion: ", i , "Padre mejor", mejor[0])
     
     #Cruzar padres con probabilidad cProb
     if random.randint(1,100) <= (cProb*100):
-        print("Longuitud: ", len(padres))
+        #print("Longuitud: ", len(padres))
         for i in range(0, len(padres), 2):
-            print("iteracion: ", i)
+            #print("iteracion: ", i)
             corte = random.randint(1, len(padres[0])-1)
-            print("corte: ", corte)
+            #print("corte: ", corte)
             hijo1 = padres[i].copy()
             if(i+1 > len(padres[0])):
                 hijo2 = padres[0].copy()
             else:
                 hijo2 = padres[i+1].copy()
-            print("1-hijo: ", hijo1)
+            #print("1-hijo: ", hijo1)
             for j in range(corte, len(padres[0])):
-                print(j)
-                print(j, " 2-hijo: ", hijo1[j])
+                #print(j)
+                #print(j, " 2-hijo: ", hijo1[j])
                 auxNodo = hijo1[j] 
                 hijo1[j] = hijo2[j]
                 hijo2[j] = auxNodo 
@@ -58,13 +59,13 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
                 generacion.append(hijo2)  
     else:
         generacion = padres
-    print("Generacion: ", generacion)
+    #print("Generacion: ", generacion)
     
     #Mutar padres con probabilidad mProb
     if random.randint(1,100) <= (mProb*100):
         for i in range(len(generacion)):
             mutacion = random.randint(0, len(generacion[0])-1)
-            print("Mutacion: ", generacion[i][mutacion] == 0)
+            #print("Mutacion: ", generacion[i][mutacion] == 0)
             if generacion[i][mutacion] == 0:
                 generacion[i][mutacion] == 1
             else:
@@ -85,7 +86,7 @@ def main():
     #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27 ] #Para 20 objetos
     #pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 20 objetos
     
-    nSoluciones = 25 #Tamaño de la poblacion
+    nSolucionesInicial = 25 #Tamaño de la poblacion
     maxGeneraciones = 5 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
     cProb = 0.7 #Probabilidad de cruce
@@ -96,36 +97,71 @@ def main():
 
     time_average = 0
 
-    ##Creamos n soluciones aleatorias que sean válidas
-    poblacion = []
-    
-    for j in range(nSoluciones):
-        objetos = list(range(l))
-        solucion = []
-        peso = 0
-        while peso < pesoMax:
-            objeto = objetos[random.randint(0, len(objetos) - 1)]
-            peso += pesos[objeto]
-            if peso <= pesoMax:
-                solucion.append(objeto)
-                objetos.remove(objeto)
-
-        s = []
-        for i in range(l):
-            s.append(0)
-        for i in solucion:
-            s[i] = 1
-        poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
-
-    it=1
-    while it < maxGeneraciones:
-        nSoluciones = aplicarOperadoresGeneticos(poblacion,k,cProb,mProb)
-        #Modelo generacional
+    for repeticiones in range(iterations):
+        ##Creamos n soluciones aleatorias que sean válidas
         poblacion = []
-        for solucion in nSoluciones:
-            poblacion.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
-        it+=1
-
+        iterationResults = []
+        nSoluciones = nSolucionesInicial
+        start = time.time()
+        for j in range(nSoluciones):
+            objetos = list(range(l))
+            solucion = []
+            peso = 0
+            while peso < pesoMax:
+                objeto = objetos[random.randint(0, len(objetos) - 1)]
+                peso += pesos[objeto]
+                if peso <= pesoMax:
+                    solucion.append(objeto)
+                    objetos.remove(objeto)
+    
+            s = []
+            for i in range(l):
+                s.append(0)
+            for i in solucion:
+                s[i] = 1
+            poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
+        generationAvg = 0
+        generationBest = 0
+            
+        for i in range (len(poblacion)):
+            generationAvg += poblacion[i][1]
+            if (poblacion[i][1] > generationBest):
+                generationBest = poblacion[i][1]
+        generationAvg /= (len(poblacion))
+            
+        iterationResults.append([generationAvg, generationBest])
+            
+        print("Fitness medio de la generacion: ", 0, " = ", generationAvg)
+        print("Fitness mejor de la generacion: ", 0, " = ", generationBest)
+        
+        it=1
+        while it < maxGeneraciones:
+            
+            nSoluciones = aplicarOperadoresGeneticos(poblacion,k,cProb,mProb)
+            #Modelo generacional
+            poblacion = []
+            for solucion in nSoluciones:
+                poblacion.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
+            
+            generationAvg = 0
+            generationBest = 0
+            
+            for i in range (len(poblacion)):
+                generationAvg += poblacion[i][1]
+                if (poblacion[i][1] > generationBest):
+                    generationBest = poblacion[i][1]
+            generationAvg /= (len(poblacion))
+            
+            iterationResults.append([generationAvg, generationBest])
+            
+            print("Fitness medio de la generacion: ", it, " = ", generationAvg)
+            print("Fitness mejor de la generacion: ", it, " = ", generationBest)
+            it+=1
+        
+        end = time.time()
+        time_average += (end - start)
+    time_average /= iterations
+    print("Tiempo medio:", time_average)
 
     #Export data to csv file
     with open("results.csv", "w") as file:
