@@ -88,5 +88,18 @@ def main():
             poblacion.append([solucion[0],evaluarSolucion(solucion[0],precios,pesos,pesoMax)])
         it+=1
 
+
+
+
+    #Export data to csv file
+    with open("results.csv", "w") as file:
+        file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
+        for i in range(len(results)):
+            data = [i]
+            data = data + results[i]
+            if (i == 0):
+                data += [timeAvg]
+            file.write(",".join([str(e) for e in data]) + "\n")
+
 if __name__ == "__main__":
     main()
