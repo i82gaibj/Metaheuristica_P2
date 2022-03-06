@@ -17,39 +17,62 @@ def evaluarSolucion(solucion, precios, pesos, pesoMax):
 
 def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
-    #Seleccionar padres mediante torneo tamaño k
 
     #Seleccionar padres mediante torneo tamaño k
     padres = []
-    mejor = [0,0]
-
+    generacion = []
     for i in range(len(poblacion)):
+        mejor = [0,0]
         for j in range(0, k):
-            randomN = random.randint(len(poblacion))
+            randomN = random.randint(0, len(poblacion)-1)
             padre = poblacion[randomN]
-            if(padre[1] > mejor[1]):
+
+            if(padre[1] >= mejor[1]):
                 mejor = padre;
-            print("hola")
-        padres.append(mejor);
-        #print("Padre mejor", mejor)
+                
+        padres.append(mejor[0]);
+        print("iteracion: ", i , "Padre mejor", mejor[0])
 
     #Cruzar padres con probabilidad cProb
-    if random.randint(1,100) <= cProb:
-    #cruzar padres con probabilidad cprob:
-
-        # vas a cruzar padres[i] con padres[i+1] y luego i+2
-        # para cruzar partes los dos padre[0] por un bit aleatorio y intercambias sus partes 
-
+    if random.randint(1,100) <= (cProb*100):
+        print("Longuitud: ", len(padres))
+        for i in range(0, len(padres), 2):
+            print("iteracion: ", i)
+            corte = random.randint(1, len(padres[0])-1)
+            print("corte: ", corte)
+            hijo1 = padres[i].copy()
+            if(i+1 > len(padres[0])):
+                hijo2 = padres[0].copy()
+            else:
+                hijo2 = padres[i+1].copy()
+            print("1-hijo: ", hijo1)
+            for j in range(corte, len(padres[0])):
+                print(j)
+                print(j, " 2-hijo: ", hijo1[j])
+                auxNodo = hijo1[j] 
+                hijo1[j] = hijo2[j]
+                hijo2[j] = auxNodo 
+            
+            generacion.append(hijo1)
+            if(i+1 < len(padres)):
+                generacion.append(hijo2)
+    print("Generacion: ", generacion)
+    
     #Mutar padres con probabilidad mProb
-    #if random.randint(1,100) <= mProb:
+    if random.randint(1,100) <= (mProb*100):
+        for i in range(len(generacion)):
+            mutacion = random.randint(0, len(generacion)-1)
+            if generacion[i][mutacion] == 0:
+                generacion[i][mutacion] == 1
+            else:
+                generacion[i][mutacion] == 0
 
 
-
-    return poblacion #Devolver la nueva poblacion (sin evaluar)
+    return generacion #Devolver la nueva poblacion (sin evaluar)
 
 def main():
 
-    iterations = 1000
+    iterations = 10
 
     pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -60,13 +83,11 @@ def main():
     #pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 20 objetos
     
     nSoluciones = 25 #Tamaño de la poblacion
-    maxGeneraciones = 10 #Numero de generaciones
+    maxGeneraciones = 5 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
     cProb = 0.7 #Probabilidad de cruce
     mProb = 0.1 #Probabilidad de mutacion
     results = []
-
-
 
     l=len(pesos)
 
@@ -74,40 +95,7 @@ def main():
 
     ##Creamos n soluciones aleatorias que sean válidas
     poblacion = []
-
-
-
-    for i in range(iterations):
-
-        aux_nsoluciones = nSoluciones
-
-        print("\n------------------" + str(rep) + "------------------")
-
-
-        for j in range(aux_nsoluciones):
-            s = []
-
-            for i in range (l):
-                s.append(random.randint(0, 1))
-
-            poblacion.append([s, evaluarSolucion(s, precios, pesos, pesoMax)])
-
-        generation_average, generation_best = 0,0
-
-        for i in range(len(poblacion)):
-            generation_average += poblacion[i][1]
-            if (poblacion[i][1] > generation_best):
-                generation_best = poblacion[i][1]
-
-        generation_average /= (len(poblacion))
-
-        #que coño es esto XD
-
-
-
-
-
-
+    
     for j in range(nSoluciones):
         objetos = list(range(l))
         solucion = []
@@ -134,8 +122,6 @@ def main():
         for solucion in nSoluciones:
             poblacion.append([solucion[0],evaluarSolucion(solucion[0],precios,pesos,pesoMax)])
         it+=1
-
-
 
 
     #Export data to csv file
