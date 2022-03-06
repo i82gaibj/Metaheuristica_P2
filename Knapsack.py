@@ -19,14 +19,13 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
     #Seleccionar padres mediante torneo tamaño k
 
+    #Seleccionar padres mediante torneo tamaño k
+    padres = []
     mejor = [0,0]
-    cProb = cProb * 100
 
     for i in range(len(poblacion)):
-        padres = []
-
-        for j in range(k):
-            randomN = poblacion[random.randint(0,len(poblacion)-1)]
+        for j in range(0, k):
+            randomN = random.randint(len(poblacion))
             padre = poblacion[randomN]
             if(padre[1] > mejor[1]):
                 mejor = padre;
@@ -34,41 +33,9 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
         padres.append(mejor);
         #print("Padre mejor", mejor)
 
-        mejor_valor = padres[0][1]
-        mejor_site = padres[0][0]
-
-        for j in range(k):
-            if mejor_valor < padres[i][1]:
-                mejor_valor = padres[i][1]
-                mejor_site = padres[i][0]
-
-        mejor.append(mejor_site)
-
-
+    #Cruzar padres con probabilidad cProb
+    if random.randint(1,100) <= cProb:
     #cruzar padres con probabilidad cprob:
-
-    size = []
-    generacion_i = []
-
-
-    for z in range (0 , len(mejor), 2):
-        padre_1 = mejor[z].copy()
-        if z+1 == len(mejor):
-            generacion_i.append(padre_1)
-            break
-
-        padre_2 = mejor[z + 1].copy()
-        if random.randint(1, 100) <=cProb:
-            cruce = random.randint(0, size-1)
-
-            for x in range(cruce, size-1):
-                aux_padre = padre_1[x]
-                padre_1[x] = padre_2[x]
-                padre_2[x] = aux_padre
-
-        generacion_i.append(padre_1)
-        generacion_i.append(padre_2)
-
 
         # vas a cruzar padres[i] con padres[i+1] y luego i+2
         # para cruzar partes los dos padre[0] por un bit aleatorio y intercambias sus partes 
@@ -76,14 +43,9 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
     #Mutar padres con probabilidad mProb
     #if random.randint(1,100) <= mProb:
 
-    for y in range (len(generacion_i)):
-
-        if random.randint(1,100) <= (mProb*100):
-            mutacion = random.randint(0, size-1)
-            generacion_i[y][mutacion] = 0 if generacion_i[y][mutacion] == 1 else 1
 
 
-    return generacion_i #Devolver la nueva poblacion (sin evaluar)
+    return poblacion #Devolver la nueva poblacion (sin evaluar)
 
 def main():
 
