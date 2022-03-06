@@ -96,7 +96,9 @@ def main():
     l=len(pesos)
 
     time_average = 0
-
+    for i in range(maxGeneraciones):
+        results.append([0,0])
+    
     for repeticiones in range(iterations):
         ##Creamos n soluciones aleatorias que sean válidas
         poblacion = []
@@ -159,9 +161,24 @@ def main():
             it+=1
         
         end = time.time()
+        
+        for i in range(len(iterationResults)):
+            results[i][0] += iterationResults[i][0]
+            if (iterationResults[i][1] > results[i][1]):
+                results[i][1] = iterationResults[i][1]
+ 
         time_average += (end - start)
     time_average /= iterations
+
     print("Tiempo medio:", time_average)
+    
+    print(" ")
+    print("El vector results guarda: ")
+    for i in range(len(results)):
+            results[i][0] /= repeticiones
+            print("Posicion ", i, " = ", results[i])
+            
+    
 
     #Export data to csv file
     with open("results.csv", "w") as file:
