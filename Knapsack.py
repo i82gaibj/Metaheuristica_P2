@@ -186,8 +186,7 @@ def main():
         for i in range(len(results)):
             data = [i]
             data = data + results[i]
-            if (i == 0):
-                data += [time_average]
+            data += [time_average]
             file.write(",".join([str(e) for e in data]) + "\n")
 
 if __name__ == "__main__":
