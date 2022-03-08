@@ -141,17 +141,14 @@ def main():
                         for i in range (len(poblacion)):
                             generationAvg += poblacion[i][1]
                         generationAvg /= (len(poblacion))
-                        #print(generationAvg)
                         sumaAverage += generationAvg
                     
                     #print(repeticiones)
 
                     it+=1
             sumaAverage /= iterations
-            #print("Hola: ", sumaAverage)
 
             iterationResults.append("{:.3f}".format(sumaAverage))
-            print(iterationResults)
         results.append(iterationResults)
     print(" ")
     print("El vector results guarda: ")
@@ -161,9 +158,10 @@ def main():
 
     #Export data to csv file
     with open("prueba.csv", "w") as file:
-        file.write(",".join([" ", "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]) + "\n")
+        file.write(",".join([" ", " Probabilidad de Mutacion"]) + "\n")
+        file.write(",".join([" Prob Cruce ", "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]) + "\n")
         for i in range(11):
-            data = [i]
+            data = [float(i/10)]
             data = data + results[i]
             file.write(",".join([str(e) for e in data]) + "\n")
 
