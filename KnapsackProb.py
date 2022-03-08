@@ -94,9 +94,9 @@ def main():
     results = []
     l=len(pesos)
     
-    for c in range(0, 10, 1):
+    for c in range(0, 11, 1):
         iterationResults = []
-        for m in range(0, 10, 1):
+        for m in range(0, 11, 1):
             cProb = float(c/10);
             mProb = float(m/10);  
             sumaAverage = 0
@@ -161,8 +161,8 @@ def main():
 
     #Export data to csv file
     with open("prueba.csv", "w") as file:
-        file.write(",".join(["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]) + "\n")
-        for i in range(10):
+        file.write(",".join([" ", "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]) + "\n")
+        for i in range(11):
             data = [i]
             data = data + results[i]
             file.write(",".join([str(e) for e in data]) + "\n")
