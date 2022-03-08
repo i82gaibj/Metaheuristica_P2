@@ -76,7 +76,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
 def main():
 
-    iterations = 10
+    iterations = 1000
 
     pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -86,11 +86,11 @@ def main():
     #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27 ] #Para 20 objetos
     #pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 20 objetos
     
-    nSolucionesInicial = 25 #Tamaño de la poblacion
-    maxGeneraciones = 5 #Numero de generaciones
-    k = 3 #Tamaño torneo selector de padres
-    cProb = 0.7 #Probabilidad de cruce
-    mProb = 0.1 #Probabilidad de mutacion
+    nSolucionesInicial = 35 #Tamaño de la poblacion Default 25
+    maxGeneraciones = 5 #Numero de generaciones Default 5
+    k = 3 #Tamaño torneo selector de padres Default 3
+    cProb = 0.7 #Probabilidad de cruce Default 0.7
+    mProb = 0.1 #Probabilidad de mutacion Default 0.1
     results = []
 
     l=len(pesos)
@@ -133,8 +133,8 @@ def main():
             
         iterationResults.append([generationAvg, generationBest])
             
-        print("Fitness medio de la generacion: ", 0, " = ", generationAvg)
-        print("Fitness mejor de la generacion: ", 0, " = ", generationBest)
+        #print("Fitness medio de la generacion: ", 0, " = ", generationAvg)
+        #print("Fitness mejor de la generacion: ", 0, " = ", generationBest)
         
         it=1
         while it < maxGeneraciones:
@@ -156,8 +156,9 @@ def main():
             
             iterationResults.append([generationAvg, generationBest])
             
-            print("Fitness medio de la generacion: ", it, " = ", generationAvg)
-            print("Fitness mejor de la generacion: ", it, " = ", generationBest)
+            print(repeticiones)
+            #print("Fitness medio de la generacion: ", it, " = ", generationAvg)
+            #print("Fitness mejor de la generacion: ", it, " = ", generationBest)
             it+=1
         
         end = time.time()
@@ -170,7 +171,7 @@ def main():
         time_average += (end - start)
     time_average /= iterations
 
-    print("Tiempo medio:", time_average)
+    print("Tiempo medio:", time_average*1000000)
     
     print(" ")
     print("El vector results guarda: ")
@@ -181,10 +182,10 @@ def main():
     
 
     #Export data to csv file
-    with open("results.csv", "w") as file:
+    with open("cambioSoluciones_35.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
-            data = [i]
+            data = [i+1]
             data = data + results[i]
             data += [time_average]
             file.write(",".join([str(e) for e in data]) + "\n")
