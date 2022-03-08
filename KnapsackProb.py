@@ -149,8 +149,8 @@ def main():
                     it+=1
             sumaAverage /= iterations
             #print("Hola: ", sumaAverage)
-            
-            iterationResults.append(sumaAverage)
+
+            iterationResults.append("{:.3f}".format(sumaAverage))
             print(iterationResults)
         results.append(iterationResults)
     print(" ")
