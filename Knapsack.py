@@ -87,8 +87,8 @@ def main():
     #pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 20 objetos
     
     nSolucionesInicial = 25 #Tamaño de la poblacion Default 25
-    maxGeneraciones = 12 #Numero de generaciones Default 5
-    k = 3 #Tamaño torneo selector de padres Default 3
+    maxGeneraciones = 5 #Numero de generaciones Default 5
+    k = 12 #Tamaño torneo selector de padres Default 3
     cProb = 0.7 #Probabilidad de cruce Default 0.7
     mProb = 0.1 #Probabilidad de mutacion Default 0.1
     results = []
@@ -182,7 +182,7 @@ def main():
     
 
     #Export data to csv file
-    with open("maxGeneraciones_12.csv", "w") as file:
+    with open("tamañoTorneo_12.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
