@@ -76,7 +76,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
 def main():
 
-    iterations = 1000
+    iterations = 10
 
     pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -92,103 +92,79 @@ def main():
     cProb = 0.0 #Probabilidad de cruce Default 0.7
     mProb = 0.0 #Probabilidad de mutacion Default 0.1
     results = []
-
     l=len(pesos)
-
-    time_average = 0
-    for i in range(maxGeneraciones):
-        results.append([0,0])
     
-    for repeticiones in range(iterations):
-        ##Creamos n soluciones aleatorias que sean válidas
-        poblacion = []
+    for c in range(0, 10, 1):
         iterationResults = []
-        nSoluciones = nSolucionesInicial
-        start = time.time()
-        for j in range(nSoluciones):
-            objetos = list(range(l))
-            solucion = []
-            peso = 0
-            while peso < pesoMax:
-                objeto = objetos[random.randint(0, len(objetos) - 1)]
-                peso += pesos[objeto]
-                if peso <= pesoMax:
-                    solucion.append(objeto)
-                    objetos.remove(objeto)
-    
-            s = []
-            for i in range(l):
-                s.append(0)
-            for i in solucion:
-                s[i] = 1
-            poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
-        generationAvg = 0
-        generationBest = 0
+        for m in range(0, 10, 1):
+            cProb = float(c/10);
+            mProb = float(m/10);  
+            sumaAverage = 0
             
-        for i in range (len(poblacion)):
-            generationAvg += poblacion[i][1]
-            if (poblacion[i][1] > generationBest):
-                generationBest = poblacion[i][1]
-        generationAvg /= (len(poblacion))
+            for repeticiones in range(iterations):
+                ##Creamos n soluciones aleatorias que sean válidas
+                
+                poblacion = []
+                
+                nSoluciones = nSolucionesInicial
+                
+                for j in range(nSoluciones):
+                    objetos = list(range(l))
+                    solucion = []
+                    peso = 0
+                    while peso < pesoMax:
+                        objeto = objetos[random.randint(0, len(objetos) - 1)]
+                        peso += pesos[objeto]
+                        if peso <= pesoMax:
+                            solucion.append(objeto)
+                            objetos.remove(objeto)
             
-        iterationResults.append([generationAvg, generationBest])
-            
-        #print("Fitness medio de la generacion: ", 0, " = ", generationAvg)
-        #print("Fitness mejor de la generacion: ", 0, " = ", generationBest)
-        
-        it=1
-        while it < maxGeneraciones:
-            
-            nSoluciones = aplicarOperadoresGeneticos(poblacion,k,cProb,mProb)
-            #Modelo generacional
-            poblacion = []
-            for solucion in nSoluciones:
-                poblacion.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
-            
-            generationAvg = 0
-            generationBest = 0
-            
-            for i in range (len(poblacion)):
-                generationAvg += poblacion[i][1]
-                if (poblacion[i][1] > generationBest):
-                    generationBest = poblacion[i][1]
-            generationAvg /= (len(poblacion))
-            
-            iterationResults.append([generationAvg, generationBest])
-            
-            print(repeticiones)
-            #print("Fitness medio de la generacion: ", it, " = ", generationAvg)
-            #print("Fitness mejor de la generacion: ", it, " = ", generationBest)
-            it+=1
-        
-        end = time.time()
-        
-        for i in range(len(iterationResults)):
-            results[i][0] += iterationResults[i][0]
-            if (iterationResults[i][1] > results[i][1]):
-                results[i][1] = iterationResults[i][1]
- 
-        time_average += (end - start)
-        
-    time_average /= iterations
+                    s = []
+                    for i in range(l):
+                        s.append(0)
+                    for i in solucion:
+                        s[i] = 1
+                    poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
+                
+                it=1
+                while it < maxGeneraciones:
+                    
+                    nSoluciones = aplicarOperadoresGeneticos(poblacion,k,cProb,mProb)
+                    #Modelo generacional
+                    poblacion = []
+                    for solucion in nSoluciones:
+                        poblacion.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
+                    
+                    if it==4:
+                        
+                        generationAvg = 0
+                        for i in range (len(poblacion)):
+                            generationAvg += poblacion[i][1]
+                        generationAvg /= (len(poblacion))
+                        #print(generationAvg)
+                        sumaAverage += generationAvg
+                    
+                    #print(repeticiones)
 
-    print("Tiempo medio:", time_average*1000000)
-    
+                    it+=1
+            sumaAverage /= iterations
+            #print("Hola: ", sumaAverage)
+            
+            iterationResults.append(sumaAverage)
+            print(iterationResults)
+        results.append(iterationResults)
     print(" ")
     print("El vector results guarda: ")
     for i in range(len(results)):
-            results[i][0] /= repeticiones
             print("Posicion ", i, " = ", results[i])
             
-    
 
     #Export data to csv file
-    with open("propCruce_100_propMut_100.csv", "w") as file:
-        file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
-        for i in range(len(results)):
-            data = [i+1]
+    with open("prueba.csv", "w") as file:
+        file.write(",".join(["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]) + "\n")
+        for i in range(10):
+            data = [i]
             data = data + results[i]
-            data += [time_average*1000000]
             file.write(",".join([str(e) for e in data]) + "\n")
 
 if __name__ == "__main__":
