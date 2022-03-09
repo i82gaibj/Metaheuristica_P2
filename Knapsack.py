@@ -63,7 +63,6 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
     
     #Mutar padres con probabilidad mProb
     if random.randint(1,100) <= (mProb*100):
-        for i in range(len(generacion)):
             mutacion = random.randint(0, len(generacion[0])-1)
             #print("Mutacion: ", generacion[i][mutacion] == 0)
             if generacion[i][mutacion] == 0:
