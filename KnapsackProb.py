@@ -87,13 +87,13 @@ def main():
 
     iterations = 1000
 
-    pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
-    precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
-    pesoMax = 100 #Peso máximo que se puede poner en la mochila. Para 5 objetos
+    #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
+    #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
+    #pesoMax = 100 #Peso máximo que se puede poner en la mochila. Para 5 objetos
     
-    #pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19, 48, 3 ] #Para 20 objetos
-    #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27 ] #Para 20 objetos
-    #pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 20 objetos
+    pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19, 48, 3, 11, 87, 83, 21 ] #Para 24 objetos 3
+    precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27, 65, 602, 578, 137 ] #Para 24 objetos
+    pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
     nSolucionesInicial = 25 #Tamaño de la poblacion Default 25
     maxGeneraciones = 5 #Numero de generaciones Default 5
