@@ -1,6 +1,5 @@
 import random
 
-
 def evaluarSolucion(solucion, precios, pesos, pesoMax):
     precio = 0
     peso = 0
@@ -167,7 +166,7 @@ def main():
             
 
     #Export data to csv file
-    with open("prueba.csv", "w") as file:
+    with open("Cru_1corte_Mut_1bit.csv", "w") as file:
         
         file.write(",".join([" Prob Cruce ", "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]) + "\n")
         for i in range(11):
