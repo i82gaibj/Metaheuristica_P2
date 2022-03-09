@@ -106,7 +106,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb,elite,precios,pesos,pe
 
 def main():
 
-    iterations = 2
+    iterations = 100
 
     #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -122,7 +122,7 @@ def main():
     cProb = 0.7 #Probabilidad de cruce Default 0.7
     mProb = 0.1 #Probabilidad de mutacion Default 0.1
     results = []
-
+    elite = [[],1]
     l=len(pesos)
 
     time_average = 0
@@ -166,7 +166,6 @@ def main():
         #print("Fitness medio de la generacion: ", 0, " = ", generationAvg)
         #print("Fitness mejor de la generacion: ", 0, " = ", generationBest)
         
-        elite = poblacion[0]
         it=1
         while it < maxGeneraciones:
             
@@ -185,7 +184,7 @@ def main():
                     generationBest = poblacion[i][1]
                 if poblacion[i][1] > elite[1]:
                     elite = poblacion[i]
-                    
+            print("elite: ", elite[1])        
             generationAvg /= (len(poblacion))
             
             iterationResults.append([generationAvg, generationBest])
@@ -208,11 +207,11 @@ def main():
 
     print("Tiempo medio:", time_average*1000000)
     
-    print(" ")
-    print("El vector results guarda: ")
+    #print(" ")
+    #print("El vector results guarda: ")
     for i in range(len(results)):
             results[i][0] /= repeticiones
-            print("Posicion ", i, " = ", results[i])
+            #print("Posicion ", i, " = ", results[i])
             
     
 
