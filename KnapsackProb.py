@@ -1,5 +1,5 @@
 import random
-import time
+
 
 def evaluarSolucion(solucion, precios, pesos, pesoMax):
     precio = 0
@@ -15,6 +15,21 @@ def evaluarSolucion(solucion, precios, pesos, pesoMax):
     else:
         return precio
     
+def mutacion1bit(generacion):
+    for i in range(len(generacion)):
+            mutacion = random.randint(0, len(generacion[0])-1)
+            #print("Mutacion: ", generacion[i][mutacion] == 0)
+            if generacion[i][mutacion] == 0:
+                generacion[i][mutacion] = 1
+            else:
+                generacion[i][mutacion] = 0
+    return generacion
+
+def mutacionRotacion(generacion):
+    for i in range(len(generacion)):
+            bit = random.randint(0, len(generacion[0])-1)
+            bitDestino = random.randint(0, len(generacion[0])-1)
+            generacion[i][bitDestino] = generacion[i][bit]
 
 def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
@@ -63,12 +78,8 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
     
     #Mutar padres con probabilidad mProb
     if random.randint(1,100) <= (mProb*100):
-            mutacion = random.randint(0, len(generacion[0])-1)
-            #print("Mutacion: ", generacion[i][mutacion] == 0)
-            if generacion[i][mutacion] == 0:
-                generacion[i][mutacion] == 1
-            else:
-                generacion[i][mutacion] == 0
+       generacion = mutacion1bit(generacion)
+        
 
 
     return generacion #Devolver la nueva poblacion (sin evaluar)
