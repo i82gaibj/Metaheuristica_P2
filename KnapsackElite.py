@@ -96,7 +96,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb,elite,precios,pesos,pe
     
     #Sustituyo el peor individuo por el individuo elite
     generacionElite[indice_peor_individuo] = elite
-    
+    print("mejor: ", generacionElite[indice_peor_individuo][1])
     #Devolvemos la generacion elitista a nuesta generacion z dejando solo los individuos sin evaluar
     generacion = []
     for n in range(len(generacionElite)):
