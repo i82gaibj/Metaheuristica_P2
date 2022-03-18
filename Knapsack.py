@@ -108,9 +108,9 @@ def main():
     precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27, 65, 602, 578, 137 ] #Para 24 objetos
     pesoMax = 500 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
-    nSolucionesInicial = 140 #Tamaño de la poblacion Default 25
+    nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
     maxGeneraciones = 5000 #Numero de generaciones Default 5000
-    k = 3 #Tamaño torneo selector de padres Default 3
+    k = 13 #Tamaño torneo selector de padres Default 3
     cProb = 0.7 #Probabilidad de cruce Default 0.7
     mProb = 0.2 #Probabilidad de mutacion Default 0.2
     results = []
@@ -205,7 +205,7 @@ def main():
     
 
     #Export data to csv file
-    with open("nSoluciones_140.csv", "w") as file:
+    with open("tamanioTorneo_13.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
