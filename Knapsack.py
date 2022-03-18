@@ -114,7 +114,7 @@ def main():
     cProb = 0.9 #Probabilidad de cruce Default 0.7 -> 0.9(Mejor)
     mProb = 0.1 #Probabilidad de mutacion Default 0.2
     results = []
-
+    elite = [[],1]
     l=len(pesos)
 
     time_average = 0
@@ -167,6 +167,18 @@ def main():
             for solucion in nSoluciones:
                 poblacion.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
             
+            #---------------------- Elitismo ---------------------
+            #Buscamos el peor individuo
+            peorValor = poblacion[0][1]
+            peor_individuo = 0
+            for i in range(len(poblacion)-1):
+                if peorValor > poblacion[i][1]:
+                    peorValor = poblacion[i][1]
+                    peor_individuo = i
+    
+            #Sustituyo el peor individuo por el individuo elite
+            poblacion[peor_individuo] = elite
+            
             generationAvg = 0
             generationBest = 0
             
@@ -205,7 +217,7 @@ def main():
     
 
     #Export data to csv file
-    with open("propMutacion_10.csv", "w") as file:
+    with open("Elitismo.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]

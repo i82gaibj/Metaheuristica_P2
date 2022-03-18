@@ -79,35 +79,11 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb,elite,precios,pesos,pe
     if random.randint(1,100) <= (mProb*100):
         generacion = mutacion1bit(generacion)
          
-    #----------------------Elitismo------------------------
-    
-    #Calculamos el fitness de la nueva generacion para localizar el peor individuo
-    #generacionElite = []
-    #for solucion in generacion:
-    #   generacionElite.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
-    
-    #Buscamos el peor individuo
-    #peorValor = generacionElite[0][1]
-    #indice_peor_individuo = 0
-    #for i in range(len(generacionElite)-1):
-    #    if peorValor > generacionElite[i][1]:
-    #        peorValor = generacionElite[i][1]
-    #        indice_peor_individuo = i
-    #
-    #Sustituyo el peor individuo por el individuo elite
-    #generacionElite[indice_peor_individuo] = elite
-    #print("mejor: ", generacionElite[indice_peor_individuo])
-    #Devolvemos la generacion elitista a nuesta generacion z dejando solo los individuos sin evaluar
-    #generacion = []
-    #for n in range(len(generacionElite)):
-    #   generacion.append(generacionElite[n][0])
-    
-    #print("vector: ", generacion[indice_peor_individuo])
     return generacion #Devolver la nueva poblacion (sin evaluar)
 
 def main():
 
-    iterations = 1
+    iterations = 100
 
     #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -115,7 +91,7 @@ def main():
     
     pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19, 48, 3, 11, 87, 83, 21 ] #Para 24 objetos 3
     precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27, 65, 602, 578, 137 ] #Para 24 objetos
-    pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
+    pesoMax = 500 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
     nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
     maxGeneraciones = 5000 #Numero de generaciones Default 5
@@ -187,7 +163,6 @@ def main():
     
             #Sustituyo el peor individuo por el individuo elite
             poblacion[indice_peor_individuo] = elite
-            print("mejor: ", poblacion[indice_peor_individuo])
             
             generationAvg = 0
             generationBest = 0
@@ -198,7 +173,6 @@ def main():
                     generationBest = poblacion[i][1]
                 if poblacion[i][1] > elite[1]:
                     elite = poblacion[i]
-            print("elite: ", elite)
             
             generationAvg /= (len(poblacion))
             
@@ -225,13 +199,13 @@ def main():
     #print(" ")
     #print("El vector results guarda: ")
     for i in range(len(results)):
-            results[i][0] /= 1
+            results[i][0] /= iterations
             #print("Posicion ", i, " = ", results[i])
             
     
 
     #Export data to csv file
-    with open("prueba.csv", "w") as file:
+    with open("Elitismo.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
