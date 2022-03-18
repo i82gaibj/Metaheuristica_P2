@@ -82,27 +82,27 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb,elite,precios,pesos,pe
     #----------------------Elitismo------------------------
     
     #Calculamos el fitness de la nueva generacion para localizar el peor individuo
-    generacionElite = []
-    for solucion in generacion:
-        generacionElite.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
+    #generacionElite = []
+    #for solucion in generacion:
+    #   generacionElite.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
     
     #Buscamos el peor individuo
-    peorValor = generacionElite[0][1]
-    indice_peor_individuo = 0
-    for i in range(len(generacionElite)-1):
-        if peorValor > generacionElite[i][1]:
-            peorValor = generacionElite[i][1]
-            indice_peor_individuo = i
-    
+    #peorValor = generacionElite[0][1]
+    #indice_peor_individuo = 0
+    #for i in range(len(generacionElite)-1):
+    #    if peorValor > generacionElite[i][1]:
+    #        peorValor = generacionElite[i][1]
+    #        indice_peor_individuo = i
+    #
     #Sustituyo el peor individuo por el individuo elite
-    generacionElite[indice_peor_individuo] = elite
-    print("mejor: ", generacionElite[indice_peor_individuo])
+    #generacionElite[indice_peor_individuo] = elite
+    #print("mejor: ", generacionElite[indice_peor_individuo])
     #Devolvemos la generacion elitista a nuesta generacion z dejando solo los individuos sin evaluar
-    generacion = []
-    for n in range(len(generacionElite)):
-        generacion.append(generacionElite[n][0])
+    #generacion = []
+    #for n in range(len(generacionElite)):
+    #   generacion.append(generacionElite[n][0])
     
-    print("vector: ", generacion[indice_peor_individuo])
+    #print("vector: ", generacion[indice_peor_individuo])
     return generacion #Devolver la nueva poblacion (sin evaluar)
 
 def main():
@@ -118,7 +118,7 @@ def main():
     pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
     nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
-    maxGeneraciones = 100 #Numero de generaciones Default 5
+    maxGeneraciones = 5000 #Numero de generaciones Default 5
     k = 9 #Tamaño torneo selector de padres Default 3
     cProb = 0.9 #Probabilidad de cruce Default 0.7
     mProb = 0.1 #Probabilidad de mutacion Default 0.1
@@ -176,6 +176,19 @@ def main():
             for n in range(len(nSoluciones)):
                 poblacion.append([nSoluciones[n],evaluarSolucion(nSoluciones[n],precios,pesos,pesoMax)])
                 #print("poblacion: ", poblacion[n])
+            
+            #Buscamos el peor individuo
+            peorValor = poblacion[0][1]
+            indice_peor_individuo = 0
+            for i in range(len(poblacion)-1):
+                if peorValor > poblacion[i][1]:
+                    peorValor = poblacion[i][1]
+                    indice_peor_individuo = i
+    
+            #Sustituyo el peor individuo por el individuo elite
+            poblacion[indice_peor_individuo] = elite
+            print("mejor: ", poblacion[indice_peor_individuo])
+            
             generationAvg = 0
             generationBest = 0
             
@@ -185,7 +198,8 @@ def main():
                     generationBest = poblacion[i][1]
                 if poblacion[i][1] > elite[1]:
                     elite = poblacion[i]
-            print("elite: ", elite)        
+            print("elite: ", elite)
+            
             generationAvg /= (len(poblacion))
             
             iterationResults.append([generationAvg, generationBest])
