@@ -114,7 +114,7 @@ def main():
     cProb = 0.9 #Probabilidad de cruce Default 0.7 -> 0.9(Mejor)
     mProb = 0.1 #Probabilidad de mutacion Default 0.2
     results = []
-    elite = [[],1]
+    
     l=len(pesos)
 
     time_average = 0
@@ -151,6 +151,7 @@ def main():
             generationAvg += poblacion[i][1]
             if (poblacion[i][1] > generationBest):
                 generationBest = poblacion[i][1]
+                elite = poblacion[i]
         generationAvg /= (len(poblacion))
             
         iterationResults.append([generationAvg, generationBest])
