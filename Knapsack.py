@@ -111,8 +111,8 @@ def main():
     nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
     maxGeneraciones = 5000 #Numero de generaciones Default 5000
     k = 9 #Tamaño torneo selector de padres Default 3
-    cProb = 0.6 #Probabilidad de cruce Default 0.7
-    mProb = 0.2 #Probabilidad de mutacion Default 0.2
+    cProb = 0.9 #Probabilidad de cruce Default 0.7 -> 0.9(Mejor)
+    mProb = 0.1 #Probabilidad de mutacion Default 0.2
     results = []
 
     l=len(pesos)
@@ -205,7 +205,7 @@ def main():
     
 
     #Export data to csv file
-    with open("propCruce_60.csv", "w") as file:
+    with open("propMutacion_10.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
