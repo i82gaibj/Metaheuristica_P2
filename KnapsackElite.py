@@ -106,7 +106,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb,elite,precios,pesos,pe
 
 def main():
 
-    iterations = 100
+    iterations = 10
 
     #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -116,10 +116,10 @@ def main():
     precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27, 65, 602, 578, 137 ] #Para 24 objetos
     pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
-    nSolucionesInicial = 20 #Tamaño de la poblacion Default 25
-    maxGeneraciones = 5000 #Numero de generaciones Default 5
-    k = 3 #Tamaño torneo selector de padres Default 3
-    cProb = 0.7 #Probabilidad de cruce Default 0.7
+    nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
+    maxGeneraciones = 1000 #Numero de generaciones Default 5
+    k = 9 #Tamaño torneo selector de padres Default 3
+    cProb = 0.9 #Probabilidad de cruce Default 0.7
     mProb = 0.1 #Probabilidad de mutacion Default 0.1
     results = []
     elite = [[],1]
