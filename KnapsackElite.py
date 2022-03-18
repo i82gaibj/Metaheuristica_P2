@@ -96,17 +96,18 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb,elite,precios,pesos,pe
     
     #Sustituyo el peor individuo por el individuo elite
     generacionElite[indice_peor_individuo] = elite
-    print("mejor: ", generacionElite[indice_peor_individuo][1])
+    print("mejor: ", generacionElite[indice_peor_individuo])
     #Devolvemos la generacion elitista a nuesta generacion z dejando solo los individuos sin evaluar
     generacion = []
     for n in range(len(generacionElite)):
         generacion.append(generacionElite[n][0])
     
+    print("vector: ", generacion[indice_peor_individuo])
     return generacion #Devolver la nueva poblacion (sin evaluar)
 
 def main():
 
-    iterations = 10
+    iterations = 5
 
     #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -117,7 +118,7 @@ def main():
     pesoMax = 400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
     nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
-    maxGeneraciones = 1000 #Numero de generaciones Default 5
+    maxGeneraciones = 100 #Numero de generaciones Default 5
     k = 9 #Tamaño torneo selector de padres Default 3
     cProb = 0.9 #Probabilidad de cruce Default 0.7
     mProb = 0.1 #Probabilidad de mutacion Default 0.1
@@ -172,9 +173,9 @@ def main():
             nSoluciones = aplicarOperadoresGeneticos(poblacion,k,cProb,mProb,elite,precios,pesos,pesoMax)
             #Modelo generacional
             poblacion = []
-            for solucion in nSoluciones:
-                poblacion.append([solucion,evaluarSolucion(solucion,precios,pesos,pesoMax)])
-            
+            for n in range(len(nSoluciones)):
+                poblacion.append([nSoluciones[n],evaluarSolucion(nSoluciones[n],precios,pesos,pesoMax)])
+                #print("poblacion: ", poblacion[n])
             generationAvg = 0
             generationBest = 0
             
@@ -184,7 +185,7 @@ def main():
                     generationBest = poblacion[i][1]
                 if poblacion[i][1] > elite[1]:
                     elite = poblacion[i]
-            print("elite: ", elite[1])        
+            print("elite: ", elite)        
             generationAvg /= (len(poblacion))
             
             iterationResults.append([generationAvg, generationBest])
