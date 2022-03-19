@@ -51,7 +51,7 @@ def cruce1corte(padres):
         
     return generacion
 
-def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb,elite,precios,pesos,pesoMax):
+def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
     #Seleccionar padres mediante torneo tamaño k
     padres = []
@@ -147,7 +147,7 @@ def main():
         it=1
         while it < maxGeneraciones:
             
-            nSoluciones = aplicarOperadoresGeneticos(poblacion,k,cProb,mProb,elite,precios,pesos,pesoMax)
+            nSoluciones = aplicarOperadoresGeneticos(poblacion,k,cProb,mProb)
             #Modelo generacional
             poblacion = []
             for n in range(len(nSoluciones)):

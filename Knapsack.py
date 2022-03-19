@@ -39,7 +39,7 @@ def cruce1corte(padres):
         corte = random.randint(1, len(padres[0])-1)
         #print("corte: ", corte)
         hijo1 = padres[i].copy()
-        if(i+1 > len(padres[0])):
+        if(i+1 > len(padres)):
             hijo2 = padres[0].copy()
         else:
             hijo2 = padres[i+1].copy()
@@ -127,23 +127,45 @@ def main():
         iterationResults = []
         nSoluciones = nSolucionesInicial
         start = time.time()
-        for j in range(nSoluciones):
+        
+        #----------------- Soluciones Iniciales No Validas ----------------
+        
+        for i in range(nSoluciones):
             objetos = list(range(l))
             solucion = []
             peso = 0
             while peso < pesoMax:
                 objeto = objetos[random.randint(0, len(objetos) - 1)]
                 peso += pesos[objeto]
-                if peso <= pesoMax:
-                    solucion.append(objeto)
-                    objetos.remove(objeto)
-    
+                solucion.append(objeto)
+                objetos.remove(objeto)
+
             s = []
             for i in range(l):
                 s.append(0)
             for i in solucion:
                 s[i] = 1
-            poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
+            poblacion.append([s, evaluarSolucion(s, precios, pesos, pesoMax)])
+        
+        ##-------------- Soluciones Iniciales Validas -------------------
+        #for j in range(nSoluciones):
+        #   objetos = list(range(l))
+        #    solucion = []
+        #    peso = 0
+        #    while peso < pesoMax:
+        #        objeto = objetos[random.randint(0, len(objetos) - 1)]
+        #        peso += pesos[objeto]
+        #        if peso <= pesoMax:
+        #            solucion.append(objeto)
+        #            objetos.remove(objeto)
+        #
+        #    s = []
+        #    for i in range(l):
+        #        s.append(0)
+        #   for i in solucion:
+        #        s[i] = 1
+        #    poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
+        
         generationAvg = 0
         generationBest = 0
             
@@ -171,14 +193,14 @@ def main():
             #---------------------- Elitismo ---------------------
             #Buscamos el peor individuo
             peorValor = poblacion[0][1]
-            peor_individuo = 0
+            indice_peor_individuo = 0
             for i in range(len(poblacion)-1):
                 if peorValor > poblacion[i][1]:
                     peorValor = poblacion[i][1]
-                    peor_individuo = i
+                    indice_peor_individuo = i
     
             #Sustituyo el peor individuo por el individuo elite
-            poblacion[peor_individuo] = elite
+            poblacion[indice_peor_individuo] = elite
             
             generationAvg = 0
             generationBest = 0
@@ -218,7 +240,7 @@ def main():
     
 
     #Export data to csv file
-    with open("Elitismo.csv", "w") as file:
+    with open("SolucionesNoValidas_Elitismos.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
