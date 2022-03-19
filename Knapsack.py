@@ -90,7 +90,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
 def main():
 
-    iterations = 1
+    iterations = 100
 
     #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -109,7 +109,7 @@ def main():
     pesoMax = 500 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
     nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
-    maxGeneraciones = 50000 #Numero de generaciones Default 5000
+    maxGeneraciones = 5000 #Numero de generaciones Default 5000
     k = 9 #Tamaño torneo selector de padres Default 3
     cProb = 0.9 #Probabilidad de cruce Default 0.7 -> 0.9(Mejor)
     mProb = 0.1 #Probabilidad de mutacion Default 0.2
@@ -237,13 +237,13 @@ def main():
     print(" ")
     print("El vector results guarda: ")
     for i in range(len(results)):
-            results[i][0] /= 1
+            results[i][0] /= repeticiones
             print("Posicion ", i, " = ", results[i])
             
     
 
     #Export data to csv file
-    with open("SolucionesNoValidas_Elitismos_Sit_50000.csv", "w") as file:
+    with open("SolucionesNoValidas_Elitismos.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
