@@ -201,6 +201,7 @@ def main():
     
             #Sustituyo el peor individuo por el individuo elite
             poblacion[indice_peor_individuo] = elite
+            #-----------------------------------------------------
             
             generationAvg = 0
             generationBest = 0
@@ -209,6 +210,8 @@ def main():
                 generationAvg += poblacion[i][1]
                 if (poblacion[i][1] > generationBest):
                     generationBest = poblacion[i][1]
+                if poblacion[i][1] > elite[1]:  #Elitismo
+                    elite = poblacion[i]        #Elitismo
             generationAvg /= (len(poblacion))
             
             iterationResults.append([generationAvg, generationBest])

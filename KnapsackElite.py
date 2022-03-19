@@ -154,6 +154,7 @@ def main():
                 poblacion.append([nSoluciones[n],evaluarSolucion(nSoluciones[n],precios,pesos,pesoMax)])
                 #print("poblacion: ", poblacion[n])
             
+            #---------------------- Elitismo --------------------------
             #Buscamos el peor individuo
             peorValor = poblacion[0][1]
             indice_peor_individuo = 0
@@ -164,6 +165,7 @@ def main():
     
             #Sustituyo el peor individuo por el individuo elite
             poblacion[indice_peor_individuo] = elite
+            #----------------------------------------------------------
             
             generationAvg = 0
             generationBest = 0
