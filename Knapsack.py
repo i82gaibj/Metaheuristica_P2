@@ -90,7 +90,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
 
 def main():
 
-    iterations = 100
+    iterations = 50
 
     #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -243,7 +243,7 @@ def main():
     
 
     #Export data to csv file
-    with open("SolucionesNoValidas_Elitismos.csv", "w") as file:
+    with open("SolucionesNoValidas_Elitismos_50_it.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
