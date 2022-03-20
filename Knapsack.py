@@ -129,42 +129,42 @@ def main():
         start = time.time()
         
         #----------------- Soluciones Iniciales No Validas ----------------
-        #
-        #for i in range(nSoluciones):
-        #    objetos = list(range(l))
-        #    solucion = []
-        #    peso = 0
-        #    while peso < pesoMax:
-        #        objeto = objetos[random.randint(0, len(objetos) - 1)]
-        #        peso += pesos[objeto]
-        #        solucion.append(objeto)
-        #        objetos.remove(objeto)
-        #
-        #    s = []
-        #    for i in range(l):
-        #        s.append(0)
-        #    for i in solucion:
-        #        s[i] = 1
-        #    poblacion.append([s, evaluarSolucion(s, precios, pesos, pesoMax)])
         
-        #-------------- Soluciones Iniciales Validas -------------------
-        for j in range(nSoluciones):
+        for i in range(nSoluciones):
             objetos = list(range(l))
             solucion = []
             peso = 0
             while peso < pesoMax:
                 objeto = objetos[random.randint(0, len(objetos) - 1)]
                 peso += pesos[objeto]
-                if peso <= pesoMax:
-                    solucion.append(objeto)
-                    objetos.remove(objeto)
+                solucion.append(objeto)
+                objetos.remove(objeto)
         
             s = []
             for i in range(l):
                 s.append(0)
             for i in solucion:
                 s[i] = 1
-            poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
+            poblacion.append([s, evaluarSolucion(s, precios, pesos, pesoMax)])
+        
+        #-------------- Soluciones Iniciales Validas -------------------
+        #for j in range(nSoluciones):
+        #   objetos = list(range(l))
+        #    solucion = []
+        #    peso = 0
+        #    while peso < pesoMax:
+        #        objeto = objetos[random.randint(0, len(objetos) - 1)]
+        #        peso += pesos[objeto]
+        #        if peso <= pesoMax:
+        #            solucion.append(objeto)
+        #            objetos.remove(objeto)
+        #
+        #    s = []
+        #    for i in range(l):
+        #        s.append(0)
+        #    for i in solucion:
+        #        s[i] = 1
+        #    poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
         
         generationAvg = 0
         generationBest = 0
@@ -243,7 +243,7 @@ def main():
     
 
     #Export data to csv file
-    with open("SolucionesValidas_Elitismos_Sit_2.csv", "w") as file:
+    with open("SolucionesNoValidas_Elitismos_Sit.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
