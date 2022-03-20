@@ -243,7 +243,7 @@ def main():
     
 
     #Export data to csv file
-    with open("SolucionesValidas_Elitismos_Sit.csv", "w") as file:
+    with open("SolucionesValidas_Elitismos_Sit_2.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
