@@ -96,7 +96,7 @@ def aplicarOperadoresGeneticos(poblacion, cantidades, k, cProb, mProb):
 
 def main():
 
-    iterations = 10
+    iterations = 100
 
     #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
