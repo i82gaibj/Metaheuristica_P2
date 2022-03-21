@@ -31,39 +31,36 @@ def mutacionRotacion(generacion):
             bitDestino = random.randint(0, len(generacion[0])-1)
             generacion[i][bitDestino] = generacion[i][bit]
 
-def mutacionEntera(generacion, cantidades):
+def mutacionEntera(generacion, cantidades, mProb):
     for i in range(len(generacion)):
-        mutacion = random.randint(0, len(generacion[0])-1)
-        generacion[i][mutacion] = random.randint(0, cantidades[mutacion])
+        if random.randint(1,100) <= (mProb*100):
+            mutacion = random.randint(0, len(generacion[0])-1)
+            generacion[i][mutacion] = random.randint(0, cantidades[mutacion])
     return generacion
 
-def cruce1corte(padres):
+def cruce1corte(ganador, cProb):
     generacion = []
-    
-    for i in range(0, len(padres), 2):
-        #print("iteracion: ", i)
-        corte = random.randint(1, len(padres[0])-1)
-        #print("corte: ", corte)
-        hijo1 = padres[i].copy()
-        if(i+1 > len(padres)):
-            hijo2 = padres[0].copy()
-        else:
-            hijo2 = padres[i+1].copy()
-        #print("1-hijo: ", hijo1)
-        for j in range(corte, len(padres[0])):
-            #print(j)
-            #print(j, " 2-hijo: ", hijo1[j])
-            auxNodo = hijo1[j] 
-            hijo1[j] = hijo2[j]
-            hijo2[j] = auxNodo 
+
+    for i in range (0, len(ganador), 2):
+        hijo1 = ganador[i].copy()
+        if i+1 == len(ganador):
+            generacion.append(hijo1)
+            break
+        hijo2 = ganador[i+1].copy()
+
+        if random.randint(1,100) <= (cProb*100):
+            corte = random.randint(0, len(ganador[0])-1)
+            for a in range (corte, len(ganador[0])-1):
+                aux = hijo1[a]
+                hijo1[a] = hijo2[a]
+                hijo2[a] = aux
             
         generacion.append(hijo1)
-        if(i+1 < len(padres)):
-            generacion.append(hijo2)
+        generacion.append(hijo2)
+
     return generacion
 
 def aplicarOperadoresGeneticos(poblacion, cantidades, k, cProb, mProb):
-
 
     #Seleccionar padres mediante torneo tamaño k
     padres = []
@@ -82,14 +79,11 @@ def aplicarOperadoresGeneticos(poblacion, cantidades, k, cProb, mProb):
         #print("iteracion: ", i , "Padre mejor", mejor[0])
     
     #Cruzar padres con probabilidad cProb
-    if random.randint(1,100) <= (cProb*100):
-        generacion = cruce1corte(padres)  
-    else:
-        generacion = padres
+    generacion = cruce1corte(padres, cProb)  
+    
     
     #Mutar padres con probabilidad mProb
-    if random.randint(1,100) <= (mProb*100):
-        generacion = mutacionEntera(generacion, cantidades)
+    generacion = mutacionEntera(generacion, cantidades, mProb)
             
 
     return generacion #Devolver la nueva poblacion (sin evaluar)
@@ -102,20 +96,20 @@ def main():
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
     #pesoMax = 100 #Peso máximo que se puede poner en la mochila. Para 5 objetos
     
-    #pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8 ] #Para 12 objetos
-    #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72 ] #Para 12 objetos
-    #pesoMax = 600 #Peso máximo que se puede poner en la mochila. Para 12 objetos
-    #cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
+    pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8 ] #Para 12 objetos
+    precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72 ] #Para 12 objetos
+    pesoMax = 1200 #Peso máximo que se puede poner en la mochila. Para 12 objetos
+    cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
     
-    pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19 ] #Para 18 objetos
-    precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123 ] #Para 18 objetos
-    pesoMax = 800 #Peso máximo que se puede poner en la mochila. Para 18 objetos
-    cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
+    #pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19 ] #Para 18 objetos
+    #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123 ] #Para 18 objetos
+    #pesoMax = 1800 #Peso máximo que se puede poner en la mochila. Para 18 objetos
+    #cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
     
     #pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19, 48, 3, 11, 87, 83, 21 ] #Para 24 objetos
     #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27, 65, 602, 578, 137 ] #Para 24 objetos
     #cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
-    #pesoMax = 1000 #Peso máximo que se puede poner en la mochila. Para 24 objetos
+    #pesoMax = 2400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
     nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
     maxGeneraciones = 5000 #Numero de generaciones Default 5000
@@ -228,9 +222,9 @@ def main():
             
             iterationResults.append([generationAvg, generationBest])
             
-            print(repeticiones)
+            #print(repeticiones)
             #print("Fitness medio de la generacion: ", it, " = ", generationAvg)
-            #print("Fitness mejor de la generacion: ", it, " = ", generationBest)
+            print("generacion: ", it, " = ", generationBest)
             it+=1
         
         end = time.time()
@@ -255,7 +249,7 @@ def main():
     
 
     #Export data to csv file
-    with open("PruebaBase_Entero_18.csv", "w") as file:
+    with open("PruebaBase_Entero_12.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
