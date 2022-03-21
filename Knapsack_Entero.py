@@ -96,25 +96,25 @@ def main():
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
     #pesoMax = 100 #Peso máximo que se puede poner en la mochila. Para 5 objetos
     
-    pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8 ] #Para 12 objetos
-    precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72 ] #Para 12 objetos
-    pesoMax = 1200 #Peso máximo que se puede poner en la mochila. Para 12 objetos
-    cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
+    #pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8 ] #Para 12 objetos
+    #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72 ] #Para 12 objetos
+    #pesoMax = 1200 #Peso máximo que se puede poner en la mochila. Para 12 objetos
+    #cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
     
     #pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19 ] #Para 18 objetos
     #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123 ] #Para 18 objetos
     #pesoMax = 1800 #Peso máximo que se puede poner en la mochila. Para 18 objetos
     #cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
     
-    #pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19, 48, 3, 11, 87, 83, 21 ] #Para 24 objetos
-    #precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27, 65, 602, 578, 137 ] #Para 24 objetos
-    #cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
-    #pesoMax = 2400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
+    pesos = [ 34, 45, 14, 76, 32, 61, 37, 54, 23, 90, 26, 8, 17, 41, 28, 57, 68, 19, 48, 3, 11, 87, 83, 21 ] #Para 24 objetos
+    precios = [ 340, 210, 87, 533, 112, 427, 260, 356, 145, 637, 234, 72, 102, 358, 295, 384, 443, 123, 237, 27, 65, 602, 578, 137 ] #Para 24 objetos
+    cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
+    pesoMax = 2400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
-    nSolucionesInicial = 100 #Tamaño de la poblacion Default 25
+    nSolucionesInicial = 140 #Tamaño de la poblacion Default 25
     maxGeneraciones = 5000 #Numero de generaciones Default 5000
     k = 3 #Tamaño torneo selector de padres Default 3
-    cProb = 0.7 #Probabilidad de cruce Default 0.7 -> 0.9(Mejor)
+    cProb = 0.7 #Probabilidad de cruce Default 0.7
     mProb = 0.2 #Probabilidad de mutacion Default 0.2
     results = []
     
@@ -222,9 +222,9 @@ def main():
             
             iterationResults.append([generationAvg, generationBest])
             
-            #print(repeticiones)
+            print(repeticiones)
             #print("Fitness medio de la generacion: ", it, " = ", generationAvg)
-            print("generacion: ", it, " = ", generationBest)
+            #print("generacion: ", it, " = ", generationBest)
             it+=1
         
         end = time.time()
@@ -243,13 +243,13 @@ def main():
     print(" ")
     print("El vector results guarda: ")
     for i in range(len(results)):
-            results[i][0] /= repeticiones
+            results[i][0] /= iterations
             print("Posicion ", i, " = ", results[i])
             
     
 
     #Export data to csv file
-    with open("PruebaBase_Entero_12.csv", "w") as file:
+    with open("nSoluciones_140.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
