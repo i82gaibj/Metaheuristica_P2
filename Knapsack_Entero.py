@@ -111,11 +111,11 @@ def main():
     cantidades = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
     pesoMax = 2400 #Peso máximo que se puede poner en la mochila. Para 24 objetos
     
-    nSolucionesInicial = 40 #Tamaño de la poblacion Default 25
-    maxGeneraciones = 1000 #Numero de generaciones Default 5000
+    nSolucionesInicial = 140 #Tamaño de la poblacion Default 25
+    maxGeneraciones = 5000 #Numero de generaciones Default 5000
     k = 3 #Tamaño torneo selector de padres Default 3
-    cProb = 0.7 #Probabilidad de cruce Default 0.7
-    mProb = 0.2 #Probabilidad de mutacion Default 0.2
+    cProb = 0.8 #Probabilidad de cruce Default 0.7
+    mProb = 0.5 #Probabilidad de mutacion Default 0.2
     results = []
     
     l=len(pesos)
@@ -205,7 +205,7 @@ def main():
             #        peorValor = poblacion[i][1]
             #        indice_peor_individuo = i
     
-            ##Sustituyo el peor individuo por el individuo elite
+            #Sustituyo el peor individuo por el individuo elite
             #poblacion[indice_peor_individuo] = elite
             #-----------------------------------------------------
             
@@ -217,7 +217,7 @@ def main():
                 if (poblacion[i][1] > generationBest):
                     generationBest = poblacion[i][1]
                 #if poblacion[i][1] > elite[1]:  #Elitismo
-                #    elite = poblacion[i]        #Elitismo
+                    #elite = poblacion[i]        #Elitismo
             generationAvg /= (len(poblacion))
             
             iterationResults.append([generationAvg, generationBest])
@@ -249,7 +249,7 @@ def main():
     
 
     #Export data to csv file
-    with open("PruebaBase_24.csv", "w") as file:
+    with open("ConfiguracionDefinitiva.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
