@@ -173,7 +173,7 @@ def main():
             generationAvg += poblacion[i][1]
             if (poblacion[i][1] > generationBest):
                 generationBest = poblacion[i][1]
-                elite = poblacion[i]
+                #elite = poblacion[i]
         generationAvg /= (len(poblacion))
             
         iterationResults.append([generationAvg, generationBest])
@@ -192,15 +192,15 @@ def main():
             
             #---------------------- Elitismo ---------------------
             #Buscamos el peor individuo
-            peorValor = poblacion[0][1]
-            indice_peor_individuo = 0
-            for i in range(len(poblacion)-1):
-                if peorValor > poblacion[i][1]:
-                    peorValor = poblacion[i][1]
-                    indice_peor_individuo = i
+            #peorValor = poblacion[0][1]
+            #indice_peor_individuo = 0
+            #for i in range(len(poblacion)-1):
+            #    if peorValor > poblacion[i][1]:
+            #        peorValor = poblacion[i][1]
+            #        indice_peor_individuo = i
     
             #Sustituyo el peor individuo por el individuo elite
-            poblacion[indice_peor_individuo] = elite
+            #poblacion[indice_peor_individuo] = elite
             #-----------------------------------------------------
             
             generationAvg = 0
@@ -210,14 +210,14 @@ def main():
                 generationAvg += poblacion[i][1]
                 if (poblacion[i][1] > generationBest):
                     generationBest = poblacion[i][1]
-                if poblacion[i][1] > elite[1]:  #Elitismo
-                    elite = poblacion[i]        #Elitismo
+                #if poblacion[i][1] > elite[1]:  #Elitismo
+                    #elite = poblacion[i]        #Elitismo
             generationAvg /= (len(poblacion))
             
             iterationResults.append([generationAvg, generationBest])
             
-            #print(repeticiones)
-            print("generacion: ", it, " = ", generationAvg)
+            print(repeticiones)
+            #print("generacion: ", it, " = ", generationAvg)
             #print("Fitness mejor de la generacion: ", it, " = ", generationBest)
             it+=1
         
@@ -243,7 +243,7 @@ def main():
     
 
     #Export data to csv file
-    with open("Elitismos.csv", "w") as file:
+    with open("Dataset24_SinElitismo.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
