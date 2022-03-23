@@ -90,7 +90,7 @@ def aplicarOperadoresGeneticos(poblacion, cantidades, k, cProb, mProb):
 
 def main():
 
-    iterations = 100
+    iterations = 1
 
     #pesos = [ 34, 45, 14, 76, 32 ] #Para 5 objetos
     #precios = [ 340, 210, 87, 533, 112 ] #Para 5 objetos
@@ -125,32 +125,13 @@ def main():
         results.append([0,0])
     
     for repeticiones in range(iterations):
-        ##Creamos n soluciones aleatorias que sean válidas
+        
         poblacion = []
         iterationResults = []
         nSoluciones = nSolucionesInicial
         start = time.time()
         
         #----------------- Soluciones Iniciales No Validas ----------------
-        
-        #for i in range(nSoluciones):
-        #    objetos = list(range(l))
-        #    solucion = []
-        #    peso = 0
-        #    while peso < pesoMax:
-        #        objeto = objetos[random.randint(0, len(objetos) - 1)]
-        #        peso += pesos[objeto]
-        #        solucion.append(objeto)
-        #        objetos.remove(objeto)
-        #
-        #    s = []
-        #    for i in range(l):
-        #        s.append(0)
-        #    for i in solucion:
-        #        s[i] = 1
-        #    poblacion.append([s, evaluarSolucion(s, precios, pesos, pesoMax)])
-        
-        #-------------- Soluciones Iniciales Validas -------------------
         
         for j in range(nSoluciones):
             objetos = list(range(l))
@@ -161,9 +142,8 @@ def main():
                 cantidad = random.randint(1, cantidades[objeto])
                     
                 peso += pesos[objeto] * cantidad
-                if peso <= pesoMax:
-                    solucion.append([objeto, cantidad])
-                    objetos.remove(objeto)
+                solucion.append([objeto, cantidad])
+                objetos.remove(objeto)
        
             s = []
             for i in range(l):
@@ -172,6 +152,30 @@ def main():
                 s[i[0]] += i[1]
             poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
         
+        #-------------- Soluciones Iniciales Validas -------------------
+        
+        #for j in range(nSoluciones):
+        #    objetos = list(range(l))
+        #    solucion = []
+        #    peso = 0
+        #    while peso < pesoMax and objetos:
+        #        objeto = objetos[random.randint(0, len(objetos) - 1)]
+        #        cantidad = random.randint(1, cantidades[objeto])
+        #            
+        #        peso += pesos[objeto] * cantidad
+        #        if peso <= pesoMax:
+        #            solucion.append([objeto, cantidad])
+        #            objetos.remove(objeto)
+       
+        #    s = []
+        #    for i in range(l):
+        #        s.append(0)
+        #    for i in solucion:
+        #        s[i[0]] += i[1]
+        #    poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
+        
+        #-------------------------------------------------------------------
+        
         generationAvg = 0
         generationBest = 0
             
@@ -179,7 +183,7 @@ def main():
             generationAvg += poblacion[i][1]
             if (poblacion[i][1] > generationBest):
                 generationBest = poblacion[i][1]
-                #elite = poblacion[i]
+                elite = poblacion[i]
         generationAvg /= (len(poblacion))
             
         iterationResults.append([generationAvg, generationBest])
@@ -198,15 +202,15 @@ def main():
             
             #---------------------- Elitismo ---------------------
             #Buscamos el peor individuo
-            #peorValor = poblacion[0][1]
-            #indice_peor_individuo = 0
-            #for i in range(len(poblacion)-1):
-            #    if peorValor > poblacion[i][1]:
-            #        peorValor = poblacion[i][1]
-            #        indice_peor_individuo = i
+            peorValor = poblacion[0][1]
+            indice_peor_individuo = 0
+            for i in range(len(poblacion)-1):
+                if peorValor > poblacion[i][1]:
+                    peorValor = poblacion[i][1]
+                    indice_peor_individuo = i
     
             #Sustituyo el peor individuo por el individuo elite
-            #poblacion[indice_peor_individuo] = elite
+            poblacion[indice_peor_individuo] = elite
             #-----------------------------------------------------
             
             generationAvg = 0
@@ -216,8 +220,8 @@ def main():
                 generationAvg += poblacion[i][1]
                 if (poblacion[i][1] > generationBest):
                     generationBest = poblacion[i][1]
-                #if poblacion[i][1] > elite[1]:  #Elitismo
-                    #elite = poblacion[i]        #Elitismo
+                if poblacion[i][1] > elite[1]:  #Elitismo
+                    elite = poblacion[i]        #Elitismo
             generationAvg /= (len(poblacion))
             
             iterationResults.append([generationAvg, generationBest])
@@ -249,7 +253,7 @@ def main():
     
 
     #Export data to csv file
-    with open("ConfiguracionDefinitiva.csv", "w") as file:
+    with open("NoValidasElite_Sit.csv", "w") as file:
         file.write(",".join(["Generation", "Fitness Avg", "Fitness Best", "Execution Time"]) + "\n")
         for i in range(len(results)):
             data = [i+1]
